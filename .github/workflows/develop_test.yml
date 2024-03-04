@@ -23,7 +23,7 @@ jobs:
 
       - name: Generate Coverage Report
         run: |
-          lcov --capture --directory . --output-file coverage.info
+          lcov --capture --directory build --output-file coverage.info
           lcov --list coverage.info # 콘솔에 커버리지 요약 출력
           lcov --remove coverage.info '/usr/*' --output-file coverage.info # 시스템 헤더 제거
           lcov --list coverage.info # 필터링된 커버리지 요약 출력
