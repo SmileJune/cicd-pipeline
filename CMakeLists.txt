@@ -3,6 +3,8 @@ project(cicd_pipeline C)
 
 set(CMAKE_C_STANDARD 11)
 
+set(CMAKE_C_FLAGS "--coverage")
+
 # pkg-config를 사용하여 CUnit 설정을 찾습니다.
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(CUNIT REQUIRED cunit)
