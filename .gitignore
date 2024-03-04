@@ -69,3 +69,6 @@ CTestTestfile.cmake
 _deps
 
 cmake-build-debug
+
+# build
+build
