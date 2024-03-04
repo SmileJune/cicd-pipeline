@@ -1,0 +1,29 @@
+name: PR Test
+
+on:
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get install libcunit1-dev gcc lcov
+
+      - name: Build and Test
+        run: |
+          chmod +x build.sh
+          ./build.sh
+          cd build
+          ./cicd_pipeline_test
+
+      - name: Generate Coverage Report
+        run: |
+          lcov --capture --directory . --output-file coverage.info
+          lcov --list coverage.info # 콘솔에 커버리지 요약 출력
+          lcov --remove coverage.info '/usr/*' --output-file coverage.info # 시스템 헤더 제거
+          lcov --list coverage.info # 필터링된 커버리지 요약 출력
