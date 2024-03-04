@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: sudo apt-get install libcunit1-dev gcc lcov
+        run: sudo apt-get install -y libcunit1-dev gcc lcov
 
       - name: Build and Test
         run: |
