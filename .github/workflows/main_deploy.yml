@@ -1,0 +1,43 @@
+name: main deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get install -y libcunit1-dev gcc
+
+      - name: Build
+        run: |
+          chmod +x build.sh
+          ./build.sh
+          cd build
+
+      - name: deploy
+        run: |
+          cd build
+          ./cicd_pipeline
+
+  create-release-version:
+    needs: build-and-deploy
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
